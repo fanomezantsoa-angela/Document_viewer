@@ -1,6 +1,6 @@
 import { create } from "zustand"
 
-type PdfFile = string | File | Blob | Uint8Array | null; 
+type PdfFile =  File ; 
 interface DocumentState { 
     file: PdfFile;
      setFile: (file: PdfFile) => void; 
