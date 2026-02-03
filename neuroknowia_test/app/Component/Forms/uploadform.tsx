@@ -52,7 +52,7 @@ export default function UploadForm() {
                 />
 
 
-                <button className='text-violet-600 border-2 p-2 rounded m-2' type='submit'>Submit</button>
+                <button className='text-violet-600 border-2 p-2 rounded m-2 focus:outline-offset-2 focus:outline-violet-500 active:bg-violet-700' type='submit'>Submit</button>
             </form>
         </div>
 

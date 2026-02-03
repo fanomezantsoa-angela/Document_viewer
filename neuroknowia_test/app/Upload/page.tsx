@@ -25,7 +25,7 @@ export default function Upload() {
                     size="small"
                     type="submit"
                     onClick={handleOpen}
-                    className='ml-24 '
+                    className='ml-24 text-violet-600  border-violet-600 border-2 p-2 rounded'
                 >
                     Upload
                 </Button>
