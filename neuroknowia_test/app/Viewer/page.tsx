@@ -1,6 +1,6 @@
 "use client"
 import { div } from "framer-motion/client";
-import PdfViewer from "./Pdfviewer";
+import DocumentViewer from "./DocumentViewer";
 import { useDocumentStore } from "../stores/documentStore";
 export default function Viewer(){
  const file= useDocumentStore(state => state.file)
@@ -9,7 +9,7 @@ export default function Viewer(){
         {file 
             ?
         <div>
-         <PdfViewer pdfView={file}/>
+         <DocumentViewer file={file}/>
         </div>
          :
          (<div>No file loaded</div>)
