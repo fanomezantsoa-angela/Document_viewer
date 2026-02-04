@@ -4,7 +4,7 @@
   "entities": [
     {
       "text": "Marie Dubois",
-      "type": "PERSON",
+      "type": "Person",
       "start": 45,
       "end": 57,
       "confidence": 0.98,
@@ -12,14 +12,14 @@
     },
     {
       "text": "15/03/1978",
-      "type": "DATE",
+      "type": "Date",
       "start": 72,
       "end": 82,
       "confidence": 0.95,
       "context": "Date of Birth"
     },
     {
-      "text": "Hypertension, start 2015, Allergies: no known allergies, tamperature: 36.8°C ",
+      "text": "Hypertension, start 2015, Allergies: no known allergies, temperature: 36.8°C ",
       "type": "Medical terms",
       "start": 90,
       "end": 120,

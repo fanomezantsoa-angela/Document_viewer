@@ -1,11 +1,11 @@
 "use client"
 import data from "../Mock_Data/Highlighting_data.json"
  import Tooltip from '@mui/material/Tooltip';
-export default function HighlightComponent(){
-       interface Entity { text: string; type: string; start: number; end: number; confidence: number; context: string; }
-    const data_analysis = data.entities
+export default function HighlightComponent({entities}: {entities: Entity[] }){
+       
+  
    
-    console.log(data.document_id)
+
     function highlighting_data(text: string){
        
              const patterns = { 
@@ -46,7 +46,7 @@ export default function HighlightComponent(){
     return(
 
         <div className="flex flex-row justify-items-center">
-            {data_analysis.map((entity)=>(
+            {entities.map((entity)=>(
            <div className="text-lg m-2 p-2 flex flex-row justify-items-center"    >
 
         <Tooltip title={Tooltip_title_content(entity)} arrow>
