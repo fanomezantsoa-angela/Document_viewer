@@ -12,7 +12,7 @@ export default function Viewer(){
          <DocumentViewer file={file}/>
         </div>
          :
-         (<div>No file loaded</div>)
+         (<div>File not loaded</div>)
     
         }
     </div>

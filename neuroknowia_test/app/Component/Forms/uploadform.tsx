@@ -1,9 +1,7 @@
 "use client";
-import Form from 'next/form'
-import React, { useState } from "react"
-import { Button } from '@mui/material'
-import { Files } from 'lucide-react';
+import React, { useState} from "react"
 import { useRouter } from 'next/navigation'
+import { PDFDocument } from 'pdf-lib'
 import { useDocumentStore } from '@/app/stores/documentStore';
 export default function UploadForm() {
     const setFile = useDocumentStore(state => state.setFile)
@@ -21,7 +19,7 @@ export default function UploadForm() {
         e.preventDefault();
 
         if (!document) {
-            console.log("No file selected");
+            console.log("No file loaded");
             return;
         }
 
@@ -29,8 +27,7 @@ export default function UploadForm() {
         setFile(document);
         router.push("/Viewer");
     }
-
-
+   
 
     return (
         <div >
@@ -42,13 +39,11 @@ export default function UploadForm() {
                     accept="
     text/plain,
     application/pdf,
-    application/vnd.openxmlformats-officedocument.wordprocessingml.document,
     image/png,
     image/jpeg,
     .txt,
-    .md,
-    .docx
-  "
+    .md
+   "
                 />
 
 
