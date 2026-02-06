@@ -3,8 +3,6 @@ import { getDocument, GlobalWorkerOptions } from "pdfjs-dist";
 import type { PDFDocumentProxy, TextItem } from "pdfjs-dist/types/src/display/api";
 import { useState, useEffect } from "react";
 import DocumentViewHeader from "../Viewer/ViewerHeader/DocumentViewHeader"
-
-
 GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";;
 export default function PdfViewer({ file }: { file: File }) {
 
@@ -21,7 +19,17 @@ export default function PdfViewer({ file }: { file: File }) {
         console.log("PDF numPages:", pdf.numPages);
         setPdf(pdf)
         setNumberPages(pdf.numPages);
+       
         const fullText: String[] = [];
+         if(pdf.numPages==1){
+            setCurrentPage(1)
+            const page = await pdf.getPage(currentPage);
+            const pagecontent = await page.getTextContent();
+            const items = (pagecontent as any).items || [];
+            const text = items.map((item: any) => item.str || "").join(" ");
+            fullText.push(text)
+
+        }
         for (let i = 1; i <= pdf.numPages; i++) {
             console.log(".....")
             const page = await pdf.getPage(i);
@@ -54,13 +62,13 @@ export default function PdfViewer({ file }: { file: File }) {
                 <div>
                     {currentPage}/{numberPages}
                 </div>
-                {numberPages !== null && <DocumentViewHeader page={currentPage} setNumberPage={setCurrentPage} />}
+                {numberPages !== null && <DocumentViewHeader pageNumber={numberPages} page={currentPage} setNumberPage={setCurrentPage} />}
 
             </div>
 
 
-            <div className="flex items-center justify-center  w-5xl font-light">
-                <div>{pageTexts[currentPage-1] || "Extracting PDF text..."}</div>
+            <div className="flex items-center justify-center justify-items-center w-1/2 bg-gray-50 ">
+                <div className="">{pageTexts[currentPage-1] || "Extracting PDF text..."}</div>
             </div>
         </div >
 

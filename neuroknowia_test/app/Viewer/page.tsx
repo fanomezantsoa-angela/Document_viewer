@@ -8,7 +8,7 @@ export default function Viewer(){
     <div>
         {file 
             ?
-        <div>
+        <div className="">
          <DocumentViewer file={file}/>
         </div>
          :

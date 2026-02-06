@@ -1,14 +1,14 @@
 "use client";
 import { Button } from "@mui/material";
 export default function DocumentViewHeader(
-{ page, setNumberPage }: DocumentViewHeaderProps){
+{ page, setNumberPage, pageNumber }: DocumentViewHeaderProps){
   function prevPage (){
     if(page && page > 1){
       setNumberPage(page-1)
     }
   }
   function nextpage(){
-    if(page){
+    if(page && pageNumber > page){
       setNumberPage(page+1)
     }
   }
@@ -32,6 +32,9 @@ export default function DocumentViewHeader(
         </svg>
 
         </Button>
+         <div>
+            {page}/{pageNumber}
+          </div>
         <Button onClick={nextpage}>
            <svg
           xmlns="http://www.w3.org/2000/svg"

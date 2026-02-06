@@ -1,8 +1,9 @@
 "use client"
 import ReactMarkdown from "react-markdown";
 import PdfViewer from "./PDFViewer";
-
 import { useState } from "react";
+import PlainTextViewer from "./PlainTextViewer";
+import MarkdownViewer from "./MarkdownViewer";
 export default function DocumentViewer({ file }: { file: File }) {
 
   const type = file.type;
@@ -18,13 +19,14 @@ export default function DocumentViewer({ file }: { file: File }) {
   if (type === "text/plain") {
     const [text, setText] = useState("");
     file.text().then(setText);
-    return <pre>{text}</pre>;
+    console.log(text)
+    return  <PlainTextViewer text={text}/>;
   }
 
   if (file.name.endsWith(".md")) {
     const [md, setMd] = useState("");
     file.text().then(setMd);
-    return <ReactMarkdown>{md}</ReactMarkdown>;
+    return  <MarkdownViewer text={md}/>;
   }
 
 
