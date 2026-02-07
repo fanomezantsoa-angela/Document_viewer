@@ -31,12 +31,15 @@ export default function MarkdownViewer({text}: {text: string}){
             <div>
                 <div className="flex flex-col">
                                 
-                                {pageNumber!== null && <DocumentViewHeader  pageNumber={pageNumber}  page={currentPage}  setNumberPage={setCurrentPage} />}
+                                {pageNumber!== null && <DocumentViewHeader  pageNumber={pageNumber}  />}
                 
                             </div>
                 <div className=" prose prose-sm max-w-none w-1/2 bg-gray-50 ">
-               <Markdown>{plainText[currentPage-1]}</Markdown>
-
+                 {plainText.map((text, index) => (
+                    <div>
+               <Markdown>{text}</Markdown>
+               </div>
+))}
             </div>
     
     

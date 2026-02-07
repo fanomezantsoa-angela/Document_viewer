@@ -4,6 +4,7 @@ import PdfViewer from "./PDFViewer";
 import { useState } from "react";
 import PlainTextViewer from "./PlainTextViewer";
 import MarkdownViewer from "./MarkdownViewer";
+import ImageViewer from "./ImageViewer";
 export default function DocumentViewer({ file }: { file: File }) {
 
   const type = file.type;
@@ -13,7 +14,8 @@ export default function DocumentViewer({ file }: { file: File }) {
   }
 
   if (type.startsWith("image/")) {
-    return <img src={URL.createObjectURL(file)} />;
+    <ImageViewer file={file}/>
+   
   }
 
   if (type === "text/plain") {

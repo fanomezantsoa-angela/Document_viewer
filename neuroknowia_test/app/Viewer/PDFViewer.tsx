@@ -19,17 +19,10 @@ export default function PdfViewer({ file }: { file: File }) {
         console.log("PDF numPages:", pdf.numPages);
         setPdf(pdf)
         setNumberPages(pdf.numPages);
+        console.log(numberPages)
        
         const fullText: String[] = [];
-         if(pdf.numPages==1){
-            setCurrentPage(1)
-            const page = await pdf.getPage(currentPage);
-            const pagecontent = await page.getTextContent();
-            const items = (pagecontent as any).items || [];
-            const text = items.map((item: any) => item.str || "").join(" ");
-            fullText.push(text)
-
-        }
+       
         for (let i = 1; i <= pdf.numPages; i++) {
             console.log(".....")
             const page = await pdf.getPage(i);
@@ -37,12 +30,12 @@ export default function PdfViewer({ file }: { file: File }) {
             const items = (pagecontent as any).items || [];
             const text = items.map((item: any) => item.str || "").join(" ");
             fullText.push(text)
+            console.log("items length:", items.length);
+            console.log(items.slice(0, 10));
 
         }
         setPageTexts(fullText)
-        
-     
-
+        console.log(pageTexts)
 
     }
     useEffect(() => {
@@ -50,7 +43,9 @@ export default function PdfViewer({ file }: { file: File }) {
 
     }, [file]);
     
-    
+    useEffect(() => {
+  console.log("pageTexts updated:", pageTexts);
+}, [pageTexts]);
      
   
 
@@ -59,16 +54,16 @@ export default function PdfViewer({ file }: { file: File }) {
     return (
         <div >
             <div className="flex flex-col">
-                <div>
-                    {currentPage}/{numberPages}
-                </div>
-                {numberPages !== null && <DocumentViewHeader pageNumber={numberPages} page={currentPage} setNumberPage={setCurrentPage} />}
+
+                {numberPages !== null && <DocumentViewHeader pageNumber={numberPages} />}
 
             </div>
 
 
             <div className="flex items-center justify-center justify-items-center w-1/2 bg-gray-50 ">
-                <div className="">{pageTexts[currentPage-1] || "Extracting PDF text..."}</div>
+            {pageTexts.map((text, index) => (
+                <div key={index} className="">{ text || "Extracting PDF text..."}</div>
+             ))}
             </div>
         </div >
 

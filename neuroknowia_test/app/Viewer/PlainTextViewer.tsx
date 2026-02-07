@@ -8,7 +8,7 @@ export default function PlainTextViewer({text}: {text: String}){
     const [currentPage, setCurrentPage] = useState<number>(1);
     
      useEffect(()=>{
-         async function loadPlainText(plain:String, limitline=40){
+         async function loadPlainText(plain:String, limitline=60){
             const fullText: String[] =[]
             const numberligne = plain.split('\n')
             for(let i=0; i<numberligne.length; i+=limitline){
@@ -26,21 +26,22 @@ export default function PlainTextViewer({text}: {text: String}){
      }, [text])
 
     return(
-        <div>
+        <div >
             <div className="flex flex-col">
-                            <div>
-                                {currentPage}/{pageNumber}
-                            </div>
-                            {pageNumber!== null && <DocumentViewHeader pageNumber={pageNumber} page={currentPage} setNumberPage={setCurrentPage} />}
+                          
+                            {pageNumber!== null && <DocumentViewHeader pageNumber={pageNumber}  />}
             
                         </div>
             <div className="flex items-center justify-center justify-items-center w-1/2 bg-gray-50 ">
-            <div>{plainText[0] || "loading... "}</div>
+             {plainText.map((text, index) => (
+                <div key={index} className="">{ text || "Extracting PDF text..."}</div>
+             ))}
+            </div>
 
         </div>
 
 
-        </div>
+        
         
     )
 }
