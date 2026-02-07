@@ -3,6 +3,10 @@ interface DocumentViewHeaderProps {
 
   pageNumber: number ;
 
+   zoom: number;
+  ZoomIn: () => void;
+  ZoomOut: () => void;
+
  
 }
 interface Loading{
