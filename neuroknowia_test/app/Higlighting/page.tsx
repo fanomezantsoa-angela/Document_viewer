@@ -18,9 +18,7 @@ const [entities, setEntity] = useState<Entity[]>(data.entities);
     return(
 
         <div>
-            <HighlightFilter entities={InitialEntities} settingEnt={setEntity}/>
-
-         <HighlightComponent entities={entities}/>
+           
         </div>
     )
 }
