@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { PieChart, Pie, Cell, LineChart, Line, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from "recharts";
-import { FetchingData } from "../Fetchdata/FetchingData";
+import { FetchingDataProcess } from "../Fetchdata/FetchingData";
 import { Legend } from "recharts";
 export default function ProcessingChart() {
     const [Stats, setStats] = useState<(any)>(null)
@@ -34,7 +34,7 @@ export default function ProcessingChart() {
     }
     useEffect(() => {
 
-        FetchingData().then(setStats)
+        FetchingDataProcess().then(setStats)
     }, [])
     if (!Stats) {
         return <div>Loading....</div>

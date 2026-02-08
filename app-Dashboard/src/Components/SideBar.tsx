@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import MuiDrawer, { drawerClasses } from '@mui/material/Drawer';
 import { styled } from '@mui/material/styles';
 import DashBoardMenu from './DashboardMenu';
-export default function SideBar(){
+export default function SideBar({currentTab, setCurrentTab}: {currentTab: string, setCurrentTab: (tab: string) => void}){
     const drawerWidth = 240;
 
 const Drawer = styled(MuiDrawer)({
@@ -32,7 +32,7 @@ const Drawer = styled(MuiDrawer)({
           p: 1.5,
         }}
       >
-        <DashBoardMenu />
+        <DashBoardMenu currentTab={currentTab} setCurrentTab={setCurrentTab} />
       </Box>
     </Drawer>
 

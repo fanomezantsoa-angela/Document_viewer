@@ -7,7 +7,7 @@ import Stack from '@mui/material/Stack';
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import InsightsIcon from "@mui/icons-material/Insights";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
-export default function DashBoardMenu(){
+export default function DashBoardMenu({currentTab, setCurrentTab}: {currentTab: string, setCurrentTab: (tab: string) => void}){
     const ListItems = [
   { text: 'Process Stats', icon: <AssessmentIcon /> },
   { text: 'Model Performence', icon: <InsightsIcon /> },
@@ -20,13 +20,14 @@ export default function DashBoardMenu(){
       <List dense>
         {ListItems.map((item, index) => (
           <ListItem key={index} disablePadding sx={{ display: 'block' }}>
-            <ListItemButton selected={index === 0}>
+            <ListItemButton selected={currentTab==item.text} onClick={()=>setCurrentTab(item.text)}>
               <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItemButton>
           </ListItem>
         ))}
       </List>
+
       </Stack>
     )
 }
