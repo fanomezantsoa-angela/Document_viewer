@@ -3,6 +3,7 @@ import ProcessingChart from './Components/ProcessingChart'
 import './App.css'
 import Performence from './Components/Performence'
 import SideBar from './Components/SideBar'
+import Activity from './Components/Activity'
 
 function App() {
   const [currentSelectedTab, setCurrentSelectedTab]=useState("Process Stats")
@@ -16,6 +17,8 @@ function App() {
     <div className='w-lvh'>
       {currentSelectedTab === "Process Stats" && <ProcessingChart />}
       {currentSelectedTab === "Model Performence" && <Performence />}
+      {currentSelectedTab === "Activity tracking" && <Activity />}
+
     </div>
     </>
 

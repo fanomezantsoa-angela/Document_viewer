@@ -64,7 +64,7 @@ export default function(){
     Fetchdata()
   }, []);
 
-   const sorted = useMemo(() => { 
+   const sortedPerf = useMemo(() => { 
     return [...Performence].sort((a, b) => { 
         const x = a[sortKey]; 
         const y = b[sortKey]; 
@@ -74,11 +74,11 @@ export default function(){
      }); 
 
     }, [Performence, sortKey, sortType]);
-     const filtered = sorted.filter((row) => 
+    const filteredPerf = sortedPerf.filter((row) => 
     row.entity_type.toLowerCase().includes(searchQuery.toLowerCase()) );
    function CSVexporting() { 
     const header = ["Entity Type", "Precision", "Recall", "F1 Score", "Extracted Count"]; 
-    const rows = filtered.map((per) => [ 
+    const rows = filteredPerf.map((per) => [ 
         per.entity_type, 
         per.precision, 
         per.recall, 
@@ -119,7 +119,7 @@ export default function(){
                 </TableRow>
               </TableHead>
               <TableBody>
-                {filtered.length ==0 ? (
+                {filteredPerf.length ==0 ? (
                   <TableRow>
                     <TableCell colSpan={4} align="center">
                       <Typography variant="body1" sx={{ py: 2 }}>
@@ -128,7 +128,7 @@ export default function(){
                     </TableCell>
                   </TableRow>
                 ) : (
-                filtered.map((row: any) => (
+                filteredPerf.map((row: any) => (
                     <TableRow key={row.type} hover>
                      
                       <StyledTableCell align="center">{row.entity_type}</StyledTableCell>

@@ -11,7 +11,7 @@ export default function DashBoardMenu({currentTab, setCurrentTab}: {currentTab: 
     const ListItems = [
   { text: 'Process Stats', icon: <AssessmentIcon /> },
   { text: 'Model Performence', icon: <InsightsIcon /> },
-  { text: 'Activity tracks', icon: <NotificationsActiveIcon /> },
+  { text: 'Activity tracking', icon: <NotificationsActiveIcon /> },
  
 ];
     return(
