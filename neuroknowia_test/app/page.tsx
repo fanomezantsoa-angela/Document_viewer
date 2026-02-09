@@ -5,13 +5,16 @@ import { useDocumentStore } from "../app/stores/documentStore";
 
 export default function Home() {
    const router = useRouter();
-  const setFile= useDocumentStore((state) => state.setFilePath);
-
-  const Demoredirection = (filetype: string, file: string) => {
-    setFile(file); 
-    console.log(filetype)
-    router.push(`/Viewer`);
-  };
+  const setFile = useDocumentStore((state) => state.setFile);
+   const setFilePath = useDocumentStore((state) => state.setFilePath);
+const Demoredirection = (filetype: string, fileOrPath: File | string) => {
+  if (typeof fileOrPath === "string") {
+    setFilePath(fileOrPath);
+  } else {
+    setFile(fileOrPath); 
+  }
+  router.push("/viewer");
+};
   return (
     <div className="flex flex-col items-center justify-center text-center py-16 px-4">
       
@@ -50,16 +53,26 @@ export default function Home() {
       </div>
       <div className="flex flex-col md:flex-row items-center justify-center gap-4">
 
-         <button         onClick={() => Demoredirection("txt", "/demo.txt")}
-  className="px-6 py-3 rounded-full border border-violet-900 bg-violet-800 text-white font-semibold hover:bg-violet-700 transition mt-8">
-          Text Viewer Demo
-          </button>
-            <button  onClick={() => Demoredirection("md", "/demo.md")}  className="px-6 py-3 rounded-full border border-violet-900 bg-violet-800 text-white font-semibold hover:bg-violet-700 transition mt-8">
-          Image to text Viewer Demo
-          </button>
-          <button className="px-6 py-3 rounded-full border border-violet-900 bg-violet-800 text-white font-semibold hover:bg-violet-700 transition mt-8">
-            Markdown Viewer
-          </button>
+     <button
+  onClick={() => Demoredirection("txt", "/demo.txt")}
+  className="px-6 py-3 rounded-full border border-violet-900 bg-violet-800 text-white font-semibold hover:bg-violet-700 transition mt-8"
+>
+  Text Viewer Demo
+</button>
+
+<button
+  onClick={() => Demoredirection("image", "/demo_image.png")}
+  className="px-6 py-3 rounded-full border border-violet-900 bg-violet-800 text-white font-semibold hover:bg-violet-700 transition mt-8"
+>
+  Image to text Viewer Demo
+</button>
+
+<button
+  onClick={() => Demoredirection("md", "/demo.md")}
+  className="px-6 py-3 rounded-full border border-violet-900 bg-violet-800 text-white font-semibold hover:bg-violet-700 transition mt-8"
+>
+  Markdown Viewer
+</button>
       </div>
     </div>
   );
