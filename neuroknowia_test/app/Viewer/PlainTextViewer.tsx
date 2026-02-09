@@ -1,20 +1,32 @@
 "use client";
 import { div, li, line } from "framer-motion/client"
 import DocumentViewHeader from "./ViewerHeader/DocumentViewHeader";
-import HighlightComponent from "../Higlighting/HighlightComponent";
+ import Tooltip from '@mui/material/Tooltip';
+import { HighlightedSegments } from "../Higlighting/highlighting";
 import { useEffect, useState } from "react";
+import HighlightFilter from "../Higlighting/HighlightFIlter";
 import { UseViewMode } from "./Privacy_Control/ViewModehook";
 import { changingMode } from "./Privacy_Control/Viewchange";
 import PrivacyControl from "./Privacy_Control/PrivacyControl";
+
+interface Entity { 
+  text: string; 
+  type: string; 
+  start: number; 
+  end: number; 
+  confidence: number; 
+  context: string; 
+}
 export default function PlainTextViewer({text}: {text: string}){
      const {viewMode, setViewMode} = UseViewMode();
-    
+  
     const [plainText, setPlainText]= useState<(string[])>([])
     const [pageNumber, setPageNumber]=useState<number>(1)
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [zoom, setZoom] = useState(1);
      const [entities, setEntities]=useState<(Entity[])>([])
-    function entityDetection(text: string): Entity[] {
+   
+  function entityDetection(text: string): Entity[] {
   const entities: Entity[] = [];
  
   const dateRegex = /^(0?[1-9]|1[0-2])\/\d{1,2}\/(19|20)\d\d$/g;
@@ -72,19 +84,18 @@ export default function PlainTextViewer({text}: {text: string}){
   
   
   }
+  setEntities(entities)
+  console.log("wtf",entities)
   return entities;
-}
-
-
-    
+} 
      useEffect(()=>{
-         async function loadPlainText(plain:string, limitline=60){
+         async function loadPlainText(plain:string, limitline=40){
             const fullText: string[] =[]
             const numberligne = plain.split('\n')
             for(let i=0; i<numberligne.length; i+=limitline){
                 fullText.push(numberligne.slice(i, i+limitline).join("\n"))
             }
-            console.log("oooo",fullText.length)
+          
             
             setPlainText(fullText);
             setPageNumber(fullText.length)   
@@ -107,36 +118,77 @@ export default function PlainTextViewer({text}: {text: string}){
     entityDetection(plainText[currentPage-1])
 
 
-  }, [plainText[currentPage-1]])
-  const processedText = changingMode( plainText[currentPage - 1] || "", entities, viewMode );
+  }, [plainText, currentPage])
 
-    return(
-        <div>
-              <div >
-                <PrivacyControl />
-                          
-                            {pageNumber!== null && <DocumentViewHeader setCurrentPage={setCurrentPage} currentPage={currentPage} pageNumber={pageNumber} zoom={zoom}  ZoomIn={() => setZoom((z) => Math.min(z + 0.1, 3))}
-    ZoomOut={() => setZoom((z) => Math.max(z - 0.1, 0.5))} />}
-            
-                        </div>
-            
-        <div className=" " >
-            <div>
-                <HighlightComponent entities={entities} setEntities={setEntities}/>
-            </div>
-          
-            <div className="overflow-y-auto w-full max-w-3xl bg-white shadow-md rounded-xl p-8 space-y-10 "  style={{transform: `scale(${zoom})`,
-transformOrigin: "top center",}}>
+ 
+    const controledText = changingMode(plainText[currentPage-1], entities, viewMode)
 
-                <div  className=" whitespace-pre-wrap leading-relaxed text-gray-800">{ processedText|| "Extracting PDF text..."}</div>
-            
-            </div>
-
-        </div>
-        </div>
-
-
+  
+  const currentPageText= plainText[currentPage-1] || ''
+  
+    
+  return (
+    <div>
+      <div>
+        <PrivacyControl />
+        <HighlightFilter entities={entities} settingEnt={setEntities}/>
         
-        
-    )
+        {pageNumber !== null && (
+          <DocumentViewHeader 
+            setCurrentPage={setCurrentPage} 
+            currentPage={currentPage} 
+            pageNumber={pageNumber} 
+            zoom={zoom}  
+            ZoomIn={() => setZoom((z) => Math.min(z + 0.1, 3))}
+            ZoomOut={() => setZoom((z) => Math.max(z - 0.1, 0.5))} 
+          />
+        )}
+      </div>
+      
+     <div className="flex justify-center">
+        <div 
+          className="w-full max-w-3xl bg-white shadow-md rounded-xl p-8"
+          style={{
+            transform: `scale(${zoom})`,
+            transformOrigin: "top center",
+          }}
+        >
+          {viewMode === 'full' ? (
+           
+            <pre className="whitespace-pre-wrap font-sans text-base">
+              {HighlightedSegments(currentPageText, entities).map((segment, idx) => {
+                if (!segment.entity) {
+                  return <span key={idx}>{segment.text}</span>;
+                }
+                
+                const entity = segment.entity;
+                const colorMap : Record<string, string> =  {
+                  'DATE': 'bg-green-200 border-b-2 border-green-600',
+                  'PERSON': 'bg-blue-200 border-b-2 border-blue-600',
+                  'AMOUNT': 'bg-orange-200 border-b-2 border-orange-600',
+                  'MEDICAL_TERM': 'bg-purple-200 border-b-2 border-purple-600',
+                };
+                
+                return (
+                  <Tooltip
+                    key={idx}
+                    title={`${entity.type} - ${(entity.confidence * 100).toFixed(0)}%`}
+                  >
+                    <span className={`${colorMap[entity.type]} px-1 rounded cursor-pointer`}>
+                      {segment.text}
+                    </span>
+                  </Tooltip>
+                );
+              })}
+            </pre>
+          ) : (
+           
+            <pre className="whitespace-pre-wrap font-sans text-base">
+              {controledText}
+            </pre>
+          )}
+        </div>
+      </div>
+    </div>
+  );
 }

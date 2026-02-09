@@ -1,19 +1,40 @@
-"use client"
-import { useEffect, useState } from "react"
-export function UseViewMode(){
-    const [viewMode, setViewMode]=useState<ViewMode>("full")
-    useEffect(()=>{
-        const savedmode = localStorage.getItem("viewmode")
-        if(savedmode) setViewMode(savedmode as ViewMode)
+"use client";
+import { createContext, useContext, useEffect, useState } from "react";
 
-    }, [])
-    function updateviewmode(m: ViewMode){
-        setViewMode(m)
-        localStorage.set("viewmode", viewMode)
+export type ViewMode = "full" | "redacted" | "summary";
+
+type ViewModeContextType = {
+  viewMode: ViewMode;
+  setViewMode: (mode: ViewMode) => void;
+};
+
+const ViewModeContext = createContext<ViewModeContextType | null>(null);
+
+export function ViewModeProvider({ children }: { children: React.ReactNode }) {
+  const [viewMode, setViewMode] = useState<ViewMode>("full");
+
+
+  useEffect(() => {
+    const saved = localStorage.getItem("viewmode");
+    if (saved === "full" || saved === "redacted" || saved === "summary") {
+      setViewMode(saved);
     }
-    return{viewMode, setViewMode: updateviewmode}
-  
+  }, []);
 
+ 
+  useEffect(() => {
+    localStorage.setItem("viewmode", viewMode);
+  }, [viewMode]);
 
+  return (
+    <ViewModeContext.Provider value={{ viewMode, setViewMode }}>
+      {children}
+    </ViewModeContext.Provider>
+  );
+}
 
+export function UseViewMode() {
+  const ctx = useContext(ViewModeContext);
+  if (!ctx) throw new Error("UseViewMode must be used inside ViewModeProvider");
+  return ctx;
 }

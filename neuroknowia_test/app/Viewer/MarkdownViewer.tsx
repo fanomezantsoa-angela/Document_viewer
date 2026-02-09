@@ -2,11 +2,22 @@
 import { div, li, line } from "framer-motion/client"
 import DocumentViewHeader from "./ViewerHeader/DocumentViewHeader";
 import { useEffect, useState } from "react";
+ import Tooltip from '@mui/material/Tooltip';
 import Markdown from "react-markdown";
-import HighlightComponent from "../Higlighting/HighlightComponent";
 import { UseViewMode } from "./Privacy_Control/ViewModehook";
 import { changingMode } from "./Privacy_Control/Viewchange";
 import PrivacyControl from "./Privacy_Control/PrivacyControl";
+import HighlightFilter from "../Higlighting/HighlightFIlter";
+
+interface Entity { 
+  text: string; 
+  type: string; 
+  start: number; 
+  end: number; 
+  confidence: number; 
+  context: string; 
+}
+import { HighlightedSegments } from "../Higlighting/highlighting";
 export default function MarkdownViewer({text}: {text: string}){
      const {viewMode, setViewMode} = UseViewMode();
      const [plainText, setPlainText]= useState<(string[])>([])
@@ -77,7 +88,7 @@ export default function MarkdownViewer({text}: {text: string}){
 
         
          useEffect(()=>{
-             async function loadPlainText(plain:string, limitline=60){
+             async function loadPlainText(plain:string, limitline=40){
                 const fullText: string[] =[]
                 const numberligne = plain.split('\n')
                 for(let i=0; i<numberligne.length; i+=limitline){
@@ -106,34 +117,73 @@ export default function MarkdownViewer({text}: {text: string}){
 
 
   }, [plainText[currentPage-1]])
-  const processedText = changingMode( plainText[currentPage - 1] || "", entities, viewMode );
+  const controledText = changingMode(plainText[currentPage-1], entities, viewMode)
+  const currentPageText= plainText[currentPage-1] || ''
     
         return(
-            <div>
-                <div className="">
-                       <PrivacyControl />         
-                                {pageNumber!== null && <DocumentViewHeader setCurrentPage={setCurrentPage} currentPage={currentPage} pageNumber={pageNumber} zoom={zoom}  ZoomIn={() => setZoom((z) => Math.min(z + 0.1, 3))}
-    ZoomOut={() => setZoom((z) => Math.max(z - 0.1, 0.5))} />}
-                
-                            </div>
-               
-            <div>
-                 <div>
-<HighlightComponent entities={entities} setEntities={setEntities}/>
-                </div>
-                
-                <div className=" overflow-y-auto w-full max-w-3xl bg-white shadow-md rounded-xl p-8 space-y-10 " style={{transform: `scale(${zoom})`,
-transformOrigin: "top center",}}>
-                
-                    <div  className=" whitespace-pre-wrap leading-relaxed text-gray-800" >
-               <Markdown>{processedText}</Markdown>
+          <div>
+               <div>
+                 <PrivacyControl />
+                 <HighlightFilter entities={entities} settingEnt={setEntities}/>
+                 
+                 {pageNumber !== null && (
+                   <DocumentViewHeader 
+                     setCurrentPage={setCurrentPage} 
+                     currentPage={currentPage} 
+                     pageNumber={pageNumber} 
+                     zoom={zoom}  
+                     ZoomIn={() => setZoom((z) => Math.min(z + 0.1, 3))}
+                     ZoomOut={() => setZoom((z) => Math.max(z - 0.1, 0.5))} 
+                   />
+                 )}
                </div>
-
-            </div>
-    
-    
-            </div>
-            </div>
+               
+              <div className="flex justify-center">
+                 <div 
+                   className="w-full max-w-3xl bg-white shadow-md rounded-xl p-8"
+                   style={{
+                     transform: `scale(${zoom})`,
+                     transformOrigin: "top center",
+                   }}
+                 >
+                   {viewMode === 'full' ? (
+                    
+                     <pre className="whitespace-pre-wrap font-sans text-base">
+                       {HighlightedSegments(currentPageText, entities).map((segment, idx) => {
+                         if (!segment.entity) {
+                           return <span key={idx}><Markdown>{segment.text}</Markdown></span>;
+                         }
+                         
+                         const entity = segment.entity;
+                         const colorMap : Record<string, string> =  {
+                           'DATE': 'bg-green-200 border-b-2 border-green-600',
+                           'PERSON': 'bg-blue-200 border-b-2 border-blue-600',
+                           'AMOUNT': 'bg-orange-200 border-b-2 border-orange-600',
+                           'MEDICAL_TERM': 'bg-purple-200 border-b-2 border-purple-600',
+                         };
+                         
+                         return (
+                           <Tooltip
+                             key={idx}
+                             title={`${entity.type} - ${(entity.confidence * 100).toFixed(0)}%`}
+                           >
+                            
+                             <span className={`${colorMap[entity.type]} px-1 rounded cursor-pointer`}>
+                               <Markdown>{segment.text}</Markdown>
+                             </span>
+                           </Tooltip>
+                         );
+                       })}
+                     </pre>
+                   ) : (
+                    
+                     <pre className="whitespace-pre-wrap font-sans text-base">
+                       {controledText}
+                     </pre>
+                   )}
+                 </div>
+               </div>
+             </div>
             
         )
 

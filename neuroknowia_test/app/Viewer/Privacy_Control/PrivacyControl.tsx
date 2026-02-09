@@ -5,23 +5,24 @@ import ToggleButton from '@mui/material/ToggleButton';
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff"; 
 import ShieldIcon from "@mui/icons-material/Shield";
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
-import { UseViewMode } from "./ViewModehook";
+import { UseViewMode, ViewMode } from "./ViewModehook";
 export default function PrivacyControl(){
-    const {viewMode, setViewMode}=UseViewMode();
-    function togglebetweenMode(event: React.MouseEvent<HTMLElement>, newmode: ViewMode){
-        setViewMode(newmode)
-
-    }
+  
+   const { viewMode, setViewMode } = UseViewMode(); 
+   const handleToggle = ( event: React.MouseEvent<HTMLElement>, newMode: ViewMode | null ) => {
+       if (!newMode) return; 
+       setViewMode(newMode);
+   }
     return(
         <div>
 
     <ToggleButtonGroup
       value={viewMode}
       exclusive
-      onChange={togglebetweenMode}
+    onChange={handleToggle}
       aria-label="text alignment"
     >
-      <ToggleButton value="full" aria-label="left aligned">
+      <ToggleButton value="full" aria-label="left aligned" >
        <VisibilityIcon />
       </ToggleButton>
       <ToggleButton value="redacted" aria-label="centered">

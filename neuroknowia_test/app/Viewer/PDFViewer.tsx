@@ -5,9 +5,20 @@ import { useState, useEffect } from "react";
 import DocumentViewHeader from "../Viewer/ViewerHeader/DocumentViewHeader"
 import { UseViewMode } from "./Privacy_Control/ViewModehook";
 import { changingMode } from "./Privacy_Control/Viewchange";
-import HighlightComponent from "../Higlighting/HighlightComponent";
+ import Tooltip from '@mui/material/Tooltip';
 import PrivacyControl from "./Privacy_Control/PrivacyControl";
+import { HighlightedSegments } from "../Higlighting/highlighting";
+import HighlightFilter from "../Higlighting/HighlightFIlter";
 GlobalWorkerOptions.workerSrc = "/pdf.worker.min.mjs";
+
+interface Entity { 
+  text: string; 
+  type: string; 
+  start: number; 
+  end: number; 
+  confidence: number; 
+  context: string; 
+}
 export default function PdfViewer({ file }: { file: File }) {
  const {viewMode, setViewMode} = UseViewMode();
     const [numberPages, setNumberPages] = useState<number | null>(null);
@@ -121,36 +132,76 @@ export default function PdfViewer({ file }: { file: File }) {
 
 
   }, [pageTexts[currentPage-1]])
-     
-  const processedText = changingMode( pageTexts[currentPage - 1] || "", entities, viewMode );
+  const controledText = changingMode(pageTexts[currentPage-1], entities, viewMode)
+
+  
+  const currentPageText= pageTexts[currentPage-1] || ''
 
 
 
     return (
-        <div>
-             <div>
-                <PrivacyControl />
-
-                {numberPages !== null && <DocumentViewHeader setCurrentPage={setCurrentPage} currentPage={currentPage} pageNumber={numberPages} zoom={zoom}  ZoomIn={() => setZoom((z) => Math.min(z + 0.1, 3))}
-    ZoomOut={() => setZoom((z) => Math.max(z - 0.1, 0.5))} />}
-
+          <div>
+            <div>
+              <PrivacyControl />
+              <HighlightFilter entities={entities} settingEnt={setEntities}/>
+              
+              {numberPages !== null && (
+                <DocumentViewHeader 
+                  setCurrentPage={setCurrentPage} 
+                  currentPage={currentPage} 
+                  pageNumber={numberPages} 
+                  zoom={zoom}  
+                  ZoomIn={() => setZoom((z) => Math.min(z + 0.1, 3))}
+                  ZoomOut={() => setZoom((z) => Math.max(z - 0.1, 0.5))} 
+                />
+              )}
             </div>
-           
-        <div >
-           
-             <div>
-                <HighlightComponent entities={entities} setEntities={setEntities}/>
-                
+            
+           <div className="flex justify-center">
+              <div 
+                className="w-full max-w-3xl bg-white shadow-md rounded-xl p-8"
+                style={{
+                  transform: `scale(${zoom})`,
+                  transformOrigin: "top center",
+                }}
+              >
+                {viewMode === 'full' ? (
+                 
+                  <pre className="whitespace-pre-wrap font-sans text-base">
+                    {HighlightedSegments(currentPageText, entities).map((segment, idx) => {
+                      if (!segment.entity) {
+                        return <span key={idx}>{segment.text}</span>;
+                      }
+                      
+                      const entity = segment.entity;
+                      const colorMap : Record<string, string> =  {
+                        'DATE': 'bg-green-200 border-b-2 border-green-600',
+                        'PERSON': 'bg-blue-200 border-b-2 border-blue-600',
+                        'AMOUNT': 'bg-orange-200 border-b-2 border-orange-600',
+                        'MEDICAL_TERM': 'bg-purple-200 border-b-2 border-purple-600',
+                      };
+                      
+                      return (
+                        <Tooltip
+                          key={idx}
+                          title={`${entity.type} - ${(entity.confidence * 100).toFixed(0)}%`}
+                        >
+                          <span className={`${colorMap[entity.type]} px-1 rounded cursor-pointer`}>
+                            {segment.text}
+                          </span>
+                        </Tooltip>
+                      );
+                    })}
+                  </pre>
+                ) : (
+                 
+                  <pre className="whitespace-pre-wrap font-sans text-base">
+                    {controledText}
+                  </pre>
+                )}
+              </div>
             </div>
-
-
-            <div className=" overflow-y-auto w-full max-w-3xl bg-white shadow-md rounded-xl p-8 space-y-10 " style={{transform: `scale(${zoom})`,transformOrigin: "top center",}}>
-
-                <div  className=" whitespace-pre-wrap leading-relaxed text-gray-800">{ processedText || "Extracting PDF text..."}</div>
-           
-            </div>
-        </div >
-        </div>
+          </div>
 
 
 

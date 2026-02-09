@@ -5,6 +5,7 @@ import UploadForm from "../Component/Forms/uploadform"
 import { Modal, Button, Box } from "@mui/material"
 import React, { useState } from "react"
 import { useDocumentStore } from "../stores/documentStore"
+import ProcessingHandler from "../Component/ErrorHandling/ProcessingHandler"
 
 export default function Upload() {
 
@@ -38,7 +39,7 @@ export default function Upload() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] bg-white border-2  p-4"> <UploadForm /></Box>
+                <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-white border-2  p-4"> <ProcessingHandler /></Box>
 
 
 

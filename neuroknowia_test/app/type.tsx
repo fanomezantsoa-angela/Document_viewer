@@ -1,4 +1,11 @@
-interface Entity { text: string; type: string; start: number; end: number; confidence: number; context: string; }
+interface Entity { 
+  text: string; 
+  type: string; 
+  start: number; 
+  end: number; 
+  confidence: number; 
+  context: string; 
+}
 interface DocumentViewHeaderProps {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
   pageNumber: number ;
@@ -27,4 +34,27 @@ const highlightColor: Record<string, string> = {
         entities: Entity[]; 
     }
    type ViewMode = "full" | "redacted" | "summary";
+   export type ProcessingStatus =
+  | "idle"
+  | "uploading"
+  | "processing"
+  | "completed"
+  | "failed";
+
+   export type Stage = "upload" | "processing" | "results"; 
+
+   export type Sector = "Healthcare" | "Legal" | "Finance";
+
+   export interface ProcessedDocument { 
+    uploadId: string; 
+    documentId: string; 
+    file: File; 
+    sector: Sector; 
+    status: ProcessingStatus; 
+    progress: number; 
+  
+    confidenceScore?: number; 
+    extractedText?: string; 
+    error?: string;
+   }
 

@@ -2,10 +2,12 @@
 import { div } from "framer-motion/client";
 import DocumentViewer from "./DocumentViewer";
 import { useDocumentStore } from "../stores/documentStore";
+import { ViewModeProvider } from "./Privacy_Control/ViewModehook";
 export default function Viewer(){
     
  const file= useDocumentStore(state => state.file)
   return(
+    <ViewModeProvider>
     <div>
         <div>
 
@@ -20,6 +22,7 @@ export default function Viewer(){
     
         }
     </div>
+    </ViewModeProvider>
     )
 
 }
