@@ -5,13 +5,13 @@ import { Uploadhandler, StatusApi, Results, useToast } from "./UploadHandling";
 import ProcessionDoc from "./ProcessingDoc";
 import UploadForm from "../Forms/uploadform";
 import ResultContent from "./ResultContent";
-
+import { useDocumentStore } from "@/app/stores/documentStore";
 export default function ProcessingHandler() {
   const [stage, setStage] = useState<Stage>("upload");
   const [docs, setDocs] = useState<ProcessedDocument[]>([]);
   const [docSector, setDocSector] = useState<Sector>("Healthcare");
   const processingRef = useRef(false); // ← Prevent double processing
-  
+   const setFile= useDocumentStore((state) => state.setFile);
   const toast = useToast();
 
   const reset = () => {
@@ -173,7 +173,9 @@ export default function ProcessingHandler() {
           };
 
           setDocs(prev => prev.map(d =>
-            d.file.name === doc.file.name ? completed : d
+            d.file.name === doc.file.name ? completed : d,
+            setFile(doc.file)
+             
           ));
 
           toast.success(`${doc.file.name}: processed successfully`);

@@ -2,8 +2,6 @@
 import { useRouter } from "next/navigation";
 import { useDocumentStore } from "../app/stores/documentStore";
 
-import { div } from "framer-motion/client";
- 
 
 export default function Home() {
    const router = useRouter();
@@ -11,8 +9,8 @@ export default function Home() {
 
   const Demoredirection = (filetype: string, file: string) => {
     setFile(file); 
-    console.log(fifil)
-    router.push(`/Viewer?mode=${filetype}`);
+    console.log(filetype)
+    router.push(`/Viewer`);
   };
   return (
     <div className="flex flex-col items-center justify-center text-center py-16 px-4">
