@@ -1,6 +1,6 @@
 "use client"
 import { div } from "framer-motion/client"
-
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import UploadForm from "../Component/Forms/uploadform"
 import { Modal, Button, Box } from "@mui/material"
 import React, { useState } from "react"
@@ -15,23 +15,20 @@ export default function Upload() {
 
     return (
         <div className="flex items-center justify-center h-screen">
-            <div className="bg-gray-50 w-1/3 h-64 rounded flex items-center justify-center">
-                <Button
-                    variant="outlined"
-                    sx={{
-                        border: "1px solid black",
-                        color: "black",
-                        ml: 1
-                    }}
-                    size="small"
-                    type="submit"
-                    onClick={handleOpen}
-                    className='ml-24 text-violet-600  border-violet-600 border-2 p-2 rounded'
-                >
-                    Upload
-                </Button>
+           
+<div className="bg-gray-50 w-1/3 h-64 rounded flex flex-col items-center justify-center p-4">
+  <CloudUploadIcon className="text-violet-800 mb-4 text-6xl" />
 
-            </div>
+  <Button
+    variant="contained"
+    color="primary"
+    size="large"
+    onClick={handleOpen}
+    className="bg-violet-800 hover:bg-violet-700 text-white border-2 border-violet-800 rounded-full px-6 py-3 flex items-center gap-2"
+  >
+    <CloudUploadIcon /> Upload
+  </Button>
+</div>
 
             <Modal
                 open={open}
@@ -39,7 +36,7 @@ export default function Upload() {
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
-                <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2  bg-white border-2  p-4"> <ProcessingHandler /></Box>
+                <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-auto  bg-white border-2  p-4"> <ProcessingHandler /></Box>
 
 
 

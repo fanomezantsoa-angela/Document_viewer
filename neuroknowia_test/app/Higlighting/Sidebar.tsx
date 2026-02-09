@@ -1,5 +1,19 @@
 "use client";
 import { Drawer, Box, Typography, Divider, List, ListItem, ListItemText } from "@mui/material";
+interface Entity { 
+  text: string; 
+  type: string; 
+  start: number; 
+  end: number; 
+  confidence: number; 
+  context: string; 
+}
+  interface EntitySidebarProps { 
+        open: boolean; 
+        onClose: () => void; 
+        entity: Entity | null; 
+        entities: Entity[]; 
+    }
 export default function Sidebar({ open, onClose, entity, entities }: EntitySidebarProps) {
     if (!entity) return null;
     const relatedEntity = entities.filter((e) => e !== entity && (e.context === entity.context || Math.abs(e.start - entity.start) < 80 || e.type === entity.type));

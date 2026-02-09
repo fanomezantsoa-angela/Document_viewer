@@ -8,7 +8,6 @@ import { changingMode } from "./Privacy_Control/Viewchange";
 import PrivacyControl from "./Privacy_Control/PrivacyControl";
 import { HighlightedSegments } from "../Higlighting/highlighting";
 import HighlightFilter from "../Higlighting/HighlightFIlter";
-
 interface Entity { 
   text: string; 
   type: string; 

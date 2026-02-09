@@ -1,6 +1,14 @@
 "use client"
 import { div } from "framer-motion/client"
 import data from "../Mock_Data/Highlighting_data.json"
+interface Entity { 
+  text: string; 
+  type: string; 
+  start: number; 
+  end: number; 
+  confidence: number; 
+  context: string; 
+}
 export default function HighlightFilter({
   entities,
   settingEnt

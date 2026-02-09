@@ -23,8 +23,8 @@ export default function ProcessingChart() {
         }, [numberDoc]);
         return (
             <div className="p-6 bg-white shadow rounded-xl text-center">
-                <h2 className="text-3xl font-bold">{counter.toLocaleString()}</h2>
-                <p className="text-gray-500">Total Documents</p>
+                <h2 className="text-3xl text-violet-800 font-bold">{counter.toLocaleString()}</h2>
+                <p className="text-violet-500">Total Documents</p>
             </div>
 
         );
@@ -70,7 +70,7 @@ export default function ProcessingChart() {
     return (
         <div className="grid grid-cols-1 md:grid-rows-1 gap-6  ">
             <div>
-                 <h3 className="font-bold mb-4">Documents Chart Process</h3>
+                 <h3 className="font-bold text-violet-800 mb-4">Documents Chart Process</h3>
             </div>
            
             <div className="flex flex-col gap-6">
@@ -83,7 +83,7 @@ export default function ProcessingChart() {
 
 
                     <div className="w-full p-6 bg-white shadow rounded-xl">
-                        <h3 className="font-semibold mb-4">Documents by Sector</h3>
+                        <h3 className="font-semibold text-violet-500 mb-4">Documents by Sector</h3>
                         <ResponsiveContainer width="100%" height={270}>
                             <PieChart>
                                 <Pie data={DocumentSector} dataKey="value" nameKey="name" outerRadius={90} label>
@@ -97,7 +97,7 @@ export default function ProcessingChart() {
                         </ResponsiveContainer>
                     </div>
                     <div className="w-full p-6 bg-white shadow rounded-xl">
-                        <h3 className="font-semibold mb-4">Processing Status</h3>
+                        <h3 className="font-semibold text-violet-500 mb-4">Processing Status</h3>
                         <ResponsiveContainer width="100%" height={270}>
                             <PieChart>
                                 <Pie data={DocStatus} dataKey="value" innerRadius={50} outerRadius={90} label >
@@ -121,7 +121,7 @@ export default function ProcessingChart() {
 
 
                 <div className="p-6 bg-white shadow rounded-xl">
-                    <h3 className="font-semibold mb-4">Average Processing Time(For the last 7 days)</h3>
+                    <h3 className="font-semibold text-violet-500 mb-4">Average Processing Time(For the last 7 days)</h3>
                     <ResponsiveContainer width="100%" height={250}>
                         <LineChart data={Stats.processing_time_trend}>
                             <CartesianGrid strokeDasharray="3 3" />

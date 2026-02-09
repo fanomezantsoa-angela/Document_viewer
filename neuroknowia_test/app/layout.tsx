@@ -14,10 +14,15 @@ export default function RootLayout({
      
         <html lang="en">
       <body>
-       <nav className="flex items-center justify-center justify-items-center mt-6" >
-        <Link className="text-violet-600 text-xl font-medium mr-2" href="/Upload">Upload</Link>
-       </nav>
-      {children}
+       <div className="w-full flex items-center justify-between px-6 py-4"> 
+         <h1 className="text-3xl text-violet-800 font-bold"> NeuroKnowAI </h1> 
+          <nav className="flex items-center space-x-6 mr-96">
+             <Link className="text-violet-800 text-xl font-medium" href="/Upload"> Upload </Link> 
+             <Link className="text-violet-800 text-xl font-medium " href="/Dashboard"> Dashboard </Link> 
+             </nav> 
+             </div>
+             {children}
+             
       </body>
     </html>
     
