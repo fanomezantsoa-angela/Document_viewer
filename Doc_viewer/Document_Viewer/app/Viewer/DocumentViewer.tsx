@@ -1,9 +1,30 @@
 "use client";
 import { useState, useEffect } from "react";
-import PdfViewer from "./PDFViewer";
+import dynamic from "next/dynamic";
 import PlainTextViewer from "./PlainTextViewer";
 import MarkdownViewer from "./MarkdownViewer";
-import ImageViewer from "./ImageViewer";
+
+// Load heavy viewers only when actually needed.
+// pdfjs-dist is 37 MB and tesseract.js loads WebAssembly —
+// dynamic imports keep them out of the initial bundle.
+const PdfViewer = dynamic(() => import("./PDFViewer"), {
+  ssr: false,
+  loading: () => <LoadingSpinner label="Loading PDF viewer…" />,
+});
+
+const ImageViewer = dynamic(() => import("./ImageViewer"), {
+  ssr: false,
+  loading: () => <LoadingSpinner label="Loading image viewer…" />,
+});
+
+function LoadingSpinner({ label }: { label: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center h-64 gap-3 text-slate-400">
+      <div className="w-7 h-7 border-4 border-slate-200 border-t-indigo-500 rounded-full animate-spin" />
+      <span className="text-sm">{label}</span>
+    </div>
+  );
+}
 
 // These wrapper components exist because React's Rules of Hooks forbid calling
 // useState/useEffect inside a conditional — each file type needs its own component.
