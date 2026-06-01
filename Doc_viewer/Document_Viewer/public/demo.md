@@ -1,0 +1,8 @@
+### Demo NeuroKNow Ia
+On 03/14/2026, Dr. Alice Morgan examined patient John Carter at Saint Helena Medical Center. 
+The consultation focused on chronic gastritis and early-stage nephrosis, with a follow-up scheduled 
+for 04/02/2026. According to the invoice, the total amount due was €1,245.50, including €980.00 
+for laboratory analysis and €265.50 for radiology services. As per Clause 12.4 of the Standard 
+Healthcare Liability Agreement, the hospital is required to retain all medical records for a 
+minimum of seven years. The legal representative, Brightstone Legal Group, confirmed that the 
+patient’s consent form complies with GDPR Article 9 regarding the processing of sensitive health data.

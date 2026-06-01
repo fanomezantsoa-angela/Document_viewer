@@ -1,0 +1,32 @@
+{
+  "entities": [
+    {
+      "entity_type": "Person",
+      "precision": 0.96,
+      "recall": 0.94,
+      "f1_score": 0.95,
+      "extracted_count": 8234
+    },
+    {
+      "entity_type": "Date",
+      "precision": 0.98,
+      "recall": 0.97,
+      "f1_score": 0.975,
+      "extracted_count": 15678
+    },
+    {
+      "entity_type": "Amount",
+      "precision": 0.93,
+      "recall": 0.91,
+      "f1_score": 0.92,
+      "extracted_count": 4567
+    },
+    {
+      "entity_type": "Medical Term",
+      "precision": 0.89,
+      "recall": 0.87,
+      "f1_score": 0.88,
+      "extracted_count": 3456
+    }
+  ]
+}
