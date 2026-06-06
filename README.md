@@ -18,12 +18,12 @@ git clone https://github.com/fanomezantsoa-angela/Document_viewer.git
 ## Dependency installation
 ### Document Viewer dependency installation
 ```bash
-cd Document_viewer
+cd Doc_viewer
 npm i
 ```
 ### Dashboard dependency installation
 ```bash
-cd Document_viewer
+cd  Doc_viewer
 cd app-Dashboard
 npm i
 ```
