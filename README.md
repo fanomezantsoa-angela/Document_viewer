@@ -13,24 +13,29 @@
  ## Application cloning
 
 ```bash
-git clone https://github.com/fanomezantsoa-angela/NeuroKnowIa_Test.git
+git clone https://github.com/fanomezantsoa-angela/Document_viewer.git
 ```
 ## Dependency installation
 ### Document Viewer dependency installation
 ```bash
-cd neuroknowia_test
+cd Document_viewer
 npm i
 ```
 ### Dashboard dependency installation
 ```bash
-cd NeuroKnowIa_Test
+cd Document_viewer
 cd app-Dashboard
 npm i
 ```
 ## Starting the applications
+### Starting the backend
+```bash
+cd backend
+npm run dev 
+
 ### Starting the document Viewer application
 ```bash
-cd neuroknowia_test
+cd Document_viewer
 npm run dev 
 ```
 ### Starting the dashboard
