@@ -219,27 +219,8 @@ npm run dev
 
 The Vite dashboard usually runs on `http://localhost:5173`.
 
-## Useful scripts
 
-### Backend
 
-- `npm run dev` - start the server in development mode
-- `npm run build` - compile TypeScript
-- `npm start` - run the compiled server
-
-### Document Viewer
-
-- `npm run dev` - start the Next.js development server
-- `npm run build` - build for production
-- `npm run start` - start the production server
-- `npm run lint` - run lint checks
-
-### Dashboard
-
-- `npm run dev` - start the Vite development server
-- `npm run build` - build for production
-- `npm run preview` - preview the production build
-- `npm run lint` - run lint checks
 
 ## Notes
 
