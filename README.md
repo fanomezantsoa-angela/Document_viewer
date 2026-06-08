@@ -217,7 +217,7 @@ cd Doc_viewer/app-Dashboard
 npm run dev
 ```
 
-The Vite dashboard usually runs on `http://localhost:5173`.
+Inside the Document_Viewer project as a frame.
 
 
 
