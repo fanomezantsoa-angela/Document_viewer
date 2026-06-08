@@ -22,7 +22,7 @@ export default function DashBoardMenu({
   ];
 
   const violet800 = "#5B21B6"; // Tailwind violet-800
-  const violet700 = "#6D28D9"; // Tailwind violet-700
+  const violet700 = "#7330de"; // Tailwind violet-700
   const violet100 = "#EDE9FE"; // Tailwind violet-100
 
   return (
@@ -31,7 +31,7 @@ export default function DashBoardMenu({
         flexGrow: 1,
         p: 1,
         justifyContent: "space-between",
-        bgcolor: "#F9FAFB", // gray-50 background
+     
         borderRadius: 2,
       }}
     >
@@ -44,11 +44,19 @@ export default function DashBoardMenu({
               sx={{
                 mb: 1,
                 borderRadius: 2,
+                border: "1px solid transparent",
                 color: currentTab === item.text ? "#FFFFFF" : violet800,
                 bgcolor: currentTab === item.text ? violet800 : "transparent",
-                "&:hover": {
-                  bgcolor: currentTab === item.text ? violet700 : violet100,
+                borderColor: currentTab === item.text ? violet700 : "transparent",
+                "&.Mui-selected": {
+                  borderColor: violet700,
+                  bgcolor: violet800,
                 },
+                "&:hover":  {
+                  bgcolor: currentTab === item.text ? violet700 : violet100,
+                  borderColor: currentTab === item.text ? violet700 : violet100,
+                },
+             
               }}
             >
               <ListItemIcon

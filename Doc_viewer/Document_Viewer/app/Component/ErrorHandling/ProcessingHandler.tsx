@@ -199,9 +199,9 @@ export default function ProcessingHandler() {
   }
 
   return (
-    <>
+    <div className="p-4 space-y-4">
       <ResultContent documents={docs} sector={docSector} onProcessAnother={reset} />
       <toast.ToastContainer />
-    </>
+    </div>
   );
 }

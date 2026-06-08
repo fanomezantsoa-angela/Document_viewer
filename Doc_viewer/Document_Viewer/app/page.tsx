@@ -8,7 +8,7 @@ export default function Home() {
 
   const openDemo = (path: string) => {
     setFilePath(path);
-    router.push("/viewer");
+    router.push("/Viewer");
   };
 
   return (

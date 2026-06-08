@@ -26,7 +26,7 @@ export default function Upload() {
       </button>
 
       <Modal open={open} onClose={() => setOpen(false)}>
-        <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-xl bg-white rounded-2xl shadow-xl outline-none">
+        <Box className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-5xl bg-white rounded-2xl shadow-xl outline-none">
           <ProcessingHandler />
         </Box>
       </Modal>

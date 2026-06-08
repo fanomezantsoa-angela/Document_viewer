@@ -1,6 +1,6 @@
 import multer from "multer";
 
-// Keep uploaded files as in-memory Buffers — no disk writes needed
+// Keep uploaded files as in-memory Buffers,  no disk writes needed
 const storage = multer.memoryStorage();
 
 const ALLOWED_MIME_TYPES = new Set([

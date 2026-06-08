@@ -21,7 +21,7 @@ const Drawer = styled(MuiDrawer)({
       sx={{
         display: { xs: 'none', md: 'block' },
         [`& .${drawerClasses.paper}`]: {
-          backgroundColor: 'background.paper',
+          backgroundColor: 'backgroun.paper',
         },
       }}
     >

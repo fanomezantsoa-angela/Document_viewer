@@ -24,7 +24,7 @@ export default function ResultContent({ documents, sector, onProcessAnother }: R
         URL.revokeObjectURL(url);
     };
     return (
-        <div className="p-6 space-y-6">
+        <div className="p-4 space-y-4">
             <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold">Results</h2>
                 <button onClick={onProcessAnother} className="px-4 py-2 bg-gray-800 text-white rounded" >
@@ -45,7 +45,7 @@ export default function ResultContent({ documents, sector, onProcessAnother }: R
                     </div>
                      {doc.status === "failed" && (<div className="text-sm text-red-600"> Error: {doc.error || "Unknown error"} </div>)}
                     {doc.status === "completed" && (
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 ">
                             <div className="border rounded p-3">
                                 <h3 className="font-medium mb-2">Document View</h3>
                                 <DocumentViewer file={doc.file} />
