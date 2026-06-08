@@ -16,8 +16,8 @@ function App() {
     </div>
     <div className='w-lvh'>
       {currentSelectedTab === "Process Stats" && <ProcessingChart />}
-      {currentSelectedTab === "Model Performence" && <Performence />}
-      {currentSelectedTab === "Activity tracking" && <Activity />}
+      {currentSelectedTab === "Model Performance" && <Performence />}
+      {currentSelectedTab === "Activity Tracking" && <Activity />}
 
     </div>
     </>

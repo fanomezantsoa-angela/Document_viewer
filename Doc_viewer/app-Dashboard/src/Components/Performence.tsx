@@ -52,6 +52,7 @@ export default function(){
   
    
       const performData = await FetchingDataPerformence();
+      console.log("Performence Data:", await performData);
       if (performData) {
         setPerformence(performData.entities)
        
