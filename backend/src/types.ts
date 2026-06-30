@@ -21,5 +21,6 @@ export interface UploadRecord {
   entities?: Entity[];
   extractedText?: string;
   confidenceScore?: number;
+  error?: string;
   createdAt: Date;
 }

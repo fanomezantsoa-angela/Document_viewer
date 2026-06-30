@@ -14,7 +14,10 @@ router.get("/:id", (req: Request, res: Response) => {
   }
 
   if (record.status !== "completed") {
-    res.status(400).json({ error: "Processing not complete", status: record.status });
+    res.status(400).json({
+      error: record.error ?? "Processing not complete",
+      status: record.status,
+    });
     return;
   }
 

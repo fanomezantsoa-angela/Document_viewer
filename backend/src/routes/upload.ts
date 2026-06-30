@@ -2,7 +2,7 @@ import { Router, Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { uploadMiddleware } from "../middleware/upload";
 import { UploadRecord } from "../types";
-import { extractEntities } from "../utils/entityExtraction";
+import { processDocument } from "../services/documentProcessor";
 
 const router = Router();
 
@@ -43,66 +43,12 @@ router.post(
       };
 
       uploads.set(id, record);
-      processDocument(id); // fire-and-forget
+      processDocument(id, uploads); // fire-and-forget
       return { uploadId: id, filename: file.originalname };
     });
 
     res.status(201).json({ uploads: results });
   }
 );
-
-// Simulate async document processing with incremental progress updates
-async function processDocument(id: string): Promise<void> {
-  const record = uploads.get(id);
-  if (!record) return;
-
-  // Short delay before switching to "processing"
-  await sleep(400);
-  record.status = "processing";
-  record.progress = 10;
-
-  // Simulate work in ~5 increments
-  for (let p = 25; p <= 90; p += 20) {
-    await sleep(700);
-    record.progress = p;
-  }
-
-  try {
-    let text = extractText(record);
-    record.entities = extractEntities(text);
-    record.extractedText = text;
-    record.confidenceScore = parseFloat((0.85 + Math.random() * 0.13).toFixed(4));
-    record.status = "completed";
-    record.progress = 100;
-  } catch {
-    record.status = "failed";
-    record.progress = 100;
-  }
-}
-
-function extractText(record: UploadRecord): string {
-  const { mimetype, filename, buffer } = record;
-
-  if (mimetype === "text/plain" || mimetype === "text/markdown") {
-    // We actually have the content — decode and return it
-    return buffer.toString("utf-8");
-  }
-
-  if (mimetype === "application/pdf") {
-    // Production: use pdf-parse or pdfjs-dist server-side
-    return `[PDF] Content extracted from "${filename}".\n\nIntegrate pdf-parse for real text extraction.`;
-  }
-
-  if (mimetype.startsWith("image/")) {
-    // Production: use Tesseract.js (or a cloud OCR API)
-    return `[IMAGE] OCR output from "${filename}".\n\nIntegrate Tesseract.js server-side for real OCR.`;
-  }
-
-  return `[Document] Content from "${filename}".`;
-}
-
-function sleep(ms: number): Promise<void> {
-  return new Promise((r) => setTimeout(r, ms));
-}
 
 export default router;

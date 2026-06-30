@@ -106,14 +106,16 @@ export default function ProcessingHandler() {
 
         // ── Poll status until done ─────────────────────────────────────────
         let status: "processing" | "completed" | "failed" = "processing";
+        let processingError = "";
         while (!cancelled && status === "processing") {
           try {
             const s = await StatusApi(uploadId);
             status = s.status;
+            processingError = s.error ?? processingError;
             setDocs((prev) =>
               prev.map((d) =>
                 d.file.name === doc.file.name
-                  ? { ...d, status, progress: s.progress }
+                  ? { ...d, status, progress: s.progress, error: s.error }
                   : d
               )
             );
@@ -126,11 +128,13 @@ export default function ProcessingHandler() {
         if (cancelled) break;
 
         if (status === "failed") {
-          toast.error(`${doc.file.name}: processing failed`);
+          const failureMessage = processingError || "Processing failed";
+
+          toast.error(`${doc.file.name}: ${failureMessage}`);
           setDocs((prev) =>
             prev.map((d) =>
               d.file.name === doc.file.name
-                ? { ...d, status: "failed", error: "Processing failed" }
+                ? { ...d, status: "failed", error: failureMessage }
                 : d
             )
           );

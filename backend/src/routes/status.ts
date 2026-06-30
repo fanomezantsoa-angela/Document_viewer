@@ -17,6 +17,7 @@ router.get("/:id", (req: Request, res: Response) => {
     status: record.status,
     progress: record.progress,
     entities_found: record.entities?.length ?? 0,
+    error: record.error,
   });
 });
 

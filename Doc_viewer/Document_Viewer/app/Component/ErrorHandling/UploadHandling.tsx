@@ -36,6 +36,7 @@ export async function StatusApi(uploadId: string): Promise<{
   status: "processing" | "failed" | "completed";
   progress: number;
   entities_found: number;
+  error?: string;
 }> {
   try {
     const res = await fetch(`${API_BASE}/status/${uploadId}`);
