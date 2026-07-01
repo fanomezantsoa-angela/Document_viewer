@@ -7,8 +7,8 @@ import resultsRouter from "./routes/results";
 const app = express();
 const PORT = process.env.PORT ?? 4000;
 
-// Allow requests from the Next.js frontend running on localhost:3000
-app.use(cors({ origin: "http://localhost:3000" }));
+
+app.use(cors({ origin: process.env.ALLOWED_ORIGIN || "http://localhost:3000" }));
 
 // Parse JSON request bodies (used by Express for non-multipart routes)
 app.use(express.json());

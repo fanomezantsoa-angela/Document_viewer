@@ -3,7 +3,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import { useState } from "react";
 
-const API_BASE = "http://localhost:4000/api";
+const API_BASE = "https://docviewer-backend.onrender.com"; 
 
 // ─── Upload ────────────────────────────────────────────────────────────────
 
